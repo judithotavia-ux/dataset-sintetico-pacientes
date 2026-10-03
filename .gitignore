@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# Ambiente
+.env
+
+# Banco e arquivos gerados em tempo de execução
+data/*.db
+data/*.db-*
+data/generated/
+data/exports/
+
+# Sistema
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

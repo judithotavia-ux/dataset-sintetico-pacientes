@@ -1,0 +1,33 @@
+# Opcional: sobe backend + frontend em containers.
+#   docker compose up --build
+# Painel: http://localhost:8080   API/documentação: http://localhost:8000/docs
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      DATA_DIR: /app/data
+      CORS_ORIGINS: http://localhost:8080
+      LOG_LEVEL: INFO
+    volumes:
+      - synthetic-data:/app/data
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+
+volumes:
+  synthetic-data:

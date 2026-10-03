@@ -1,0 +1,17 @@
+{
+  "dataset_id": "c78e1dac-cc03-4759-8c05-976c472b9f8d",
+  "seed": 42,
+  "passed": true,
+  "n_records": 1000,
+  "checks": {
+    "colunas_obrigatorias": "OK",
+    "valores_ausentes": "OK",
+    "tipos_de_dados": "OK",
+    "intervalos_e_categorias": "OK",
+    "imc": "OK",
+    "pressao_arterial": "OK",
+    "identificadores": "OK",
+    "consistencia_interna": "OK"
+  },
+  "issues": []
+}

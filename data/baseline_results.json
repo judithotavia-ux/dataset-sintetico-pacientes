@@ -1,0 +1,119 @@
+{
+  "seed": 42,
+  "tamanhos": {
+    "train": 699,
+    "validation": 150,
+    "test": 151
+  },
+  "classificacao_binaria": {
+    "alvo": "desfecho_adverso",
+    "prevalencia_teste": 0.1523,
+    "modelos": {
+      "Dummy (classe majoritária)": {
+        "roc_auc": 0.5,
+        "pr_auc": 0.1523,
+        "f1": 0.2644,
+        "balanced_accuracy": 0.5,
+        "brier": 0.1297,
+        "limiar_escolhido_na_validacao": 0.05
+      },
+      "Regressão logística": {
+        "roc_auc": 0.626,
+        "pr_auc": 0.3671,
+        "f1": 0.3784,
+        "balanced_accuracy": 0.6248,
+        "brier": 0.2001,
+        "limiar_escolhido_na_validacao": 0.77
+      },
+      "Random Forest": {
+        "roc_auc": 0.6101,
+        "pr_auc": 0.3193,
+        "f1": 0.3793,
+        "balanced_accuracy": 0.6454,
+        "brier": 0.1354,
+        "limiar_escolhido_na_validacao": 0.34
+      }
+    }
+  },
+  "classificacao_multiclasse": {
+    "alvo": "classificacao_risco",
+    "modelos": {
+      "Dummy (classe majoritária)": {
+        "accuracy": 0.3974,
+        "macro_f1": 0.1422,
+        "balanced_accuracy": 0.25,
+        "validation_macro_f1": 0.1411
+      },
+      "Regressão logística multinomial": {
+        "accuracy": 0.7152,
+        "macro_f1": 0.6754,
+        "balanced_accuracy": 0.6754,
+        "validation_macro_f1": 0.6965
+      },
+      "Random Forest": {
+        "accuracy": 0.6093,
+        "macro_f1": 0.5121,
+        "balanced_accuracy": 0.5283,
+        "validation_macro_f1": 0.5948
+      }
+    },
+    "matriz_confusao_random_forest": {
+      "labels": [
+        "BAIXO",
+        "MODERADO",
+        "ALTO",
+        "MUITO_ALTO"
+      ],
+      "matriz": [
+        [
+          55,
+          2,
+          3,
+          0
+        ],
+        [
+          17,
+          3,
+          9,
+          0
+        ],
+        [
+          3,
+          4,
+          19,
+          7
+        ],
+        [
+          1,
+          0,
+          13,
+          15
+        ]
+      ]
+    }
+  },
+  "regressao": {
+    "alvo": "pa_sistolica",
+    "unidade": "mmHg",
+    "modelos": {
+      "Dummy (média)": {
+        "mae": 11.472,
+        "rmse": 14.462,
+        "r2": -0.0001,
+        "validation_r2": -0.0176
+      },
+      "Ridge": {
+        "mae": 8.697,
+        "rmse": 10.638,
+        "r2": 0.4588,
+        "validation_r2": 0.3993
+      },
+      "Random Forest": {
+        "mae": 8.523,
+        "rmse": 10.461,
+        "r2": 0.4767,
+        "validation_r2": 0.4003
+      }
+    }
+  }
+}
