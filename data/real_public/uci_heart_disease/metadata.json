@@ -1,0 +1,180 @@
+{
+  "dataset_name": "UCI Heart Disease — Cleveland",
+  "data_type": "REAL_PUBLIC_ANONYMIZED",
+  "synthetic": false,
+  "real_data": true,
+  "publicly_available": true,
+  "anonymized_at_source": true,
+  "research_only": true,
+  "imported_at": "2026-10-03T02:44:36+00:00",
+  "n_records": 303,
+  "source": {
+    "pagina": "https://archive.ics.uci.edu/dataset/45/heart+disease",
+    "url_download": "https://archive.ics.uci.edu/static/public/45/heart+disease.zip",
+    "arquivo": "processed.cleveland.data",
+    "sha256": "a74b7efa387bc9d108d7d0115d831fe9b414b29ae7124f331b622b4efa0427c8",
+    "doi": "10.24432/C52P4X",
+    "licenca": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+    "citacao": "Janosi, A., Steinbrunn, W., Pfisterer, M., & Detrano, R. (1989). Heart Disease [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C52P4X",
+    "origem": "Cleveland Clinic Foundation (pesquisador responsável: Robert Detrano, M.D., Ph.D.), coleta de 1988",
+    "anonimizacao": "Segundo a documentação do repositório (heart-disease.names), nomes e números de seguridade social dos pacientes foram removidos e substituídos por valores fictícios. O arquivo processado contém apenas 14 atributos clínicos, sem identificadores."
+  },
+  "transformations": [
+    "Renomeação das 14 colunas para português e decodificação das categorias numéricas em rótulos.",
+    "Valores '?' tratados como ausentes (n_vasos_fluoroscopia e cintilografia_talio).",
+    "Criação de registro_id sequencial próprio, de doenca_cardiaca (grau_doenca > 0) e das colunas de marcação.",
+    "Nenhum registro foi alterado, removido, combinado com outra fonte ou enriquecido."
+  ],
+  "fields": [
+    {
+      "name": "registro_id",
+      "original_attribute": null,
+      "type": "string",
+      "unit": null,
+      "description": "Identificador sequencial criado neste projeto (UCI-CLE-0001…). Não existe na base original."
+    },
+    {
+      "name": "idade",
+      "original_attribute": "age",
+      "type": "int",
+      "unit": "anos",
+      "description": "Idade em anos."
+    },
+    {
+      "name": "sexo",
+      "original_attribute": "sex",
+      "type": "category",
+      "unit": null,
+      "description": "Sexo (original: 1 = masculino, 0 = feminino)."
+    },
+    {
+      "name": "tipo_dor_toracica",
+      "original_attribute": "cp",
+      "type": "category",
+      "unit": null,
+      "description": "Tipo de dor torácica: angina típica, atípica, dor não anginosa ou assintomático."
+    },
+    {
+      "name": "pa_sistolica_repouso",
+      "original_attribute": "trestbps",
+      "type": "int",
+      "unit": "mmHg",
+      "description": "Pressão arterial sistólica em repouso na admissão."
+    },
+    {
+      "name": "colesterol_total",
+      "original_attribute": "chol",
+      "type": "int",
+      "unit": "mg/dL",
+      "description": "Colesterol sérico total."
+    },
+    {
+      "name": "glicemia_jejum_maior_120",
+      "original_attribute": "fbs",
+      "type": "bool",
+      "unit": null,
+      "description": "Glicemia de jejum > 120 mg/dL."
+    },
+    {
+      "name": "ecg_repouso",
+      "original_attribute": "restecg",
+      "type": "category",
+      "unit": null,
+      "description": "Eletrocardiograma em repouso: normal, anormalidade ST-T ou hipertrofia ventricular esquerda."
+    },
+    {
+      "name": "freq_cardiaca_maxima",
+      "original_attribute": "thalach",
+      "type": "int",
+      "unit": "bpm",
+      "description": "Frequência cardíaca máxima atingida no teste de esforço."
+    },
+    {
+      "name": "angina_exercicio",
+      "original_attribute": "exang",
+      "type": "bool",
+      "unit": null,
+      "description": "Angina induzida pelo exercício."
+    },
+    {
+      "name": "depressao_st",
+      "original_attribute": "oldpeak",
+      "type": "float",
+      "unit": "mm",
+      "description": "Depressão do segmento ST induzida pelo exercício em relação ao repouso."
+    },
+    {
+      "name": "inclinacao_st",
+      "original_attribute": "slope",
+      "type": "category",
+      "unit": null,
+      "description": "Inclinação do segmento ST no pico do exercício."
+    },
+    {
+      "name": "n_vasos_fluoroscopia",
+      "original_attribute": "ca",
+      "type": "int",
+      "unit": "vasos",
+      "description": "Número de vasos principais (0–3) coloridos na fluoroscopia."
+    },
+    {
+      "name": "cintilografia_talio",
+      "original_attribute": "thal",
+      "type": "category",
+      "unit": null,
+      "description": "Resultado da cintilografia com tálio: normal, defeito fixo ou reversível."
+    },
+    {
+      "name": "grau_doenca",
+      "original_attribute": "num",
+      "type": "int",
+      "unit": null,
+      "description": "Diagnóstico angiográfico original (0 = sem estreitamento > 50%; 1–4 = presença, por grau)."
+    },
+    {
+      "name": "doenca_cardiaca",
+      "original_attribute": null,
+      "type": "bool",
+      "unit": null,
+      "description": "Alvo binário derivado: grau_doenca > 0 (convenção usada na literatura)."
+    },
+    {
+      "name": "fonte",
+      "original_attribute": null,
+      "type": "string",
+      "unit": null,
+      "description": "Nome da base de origem."
+    },
+    {
+      "name": "data_type",
+      "original_attribute": null,
+      "type": "category",
+      "unit": null,
+      "description": "Marcação obrigatória: REAL_PUBLIC_ANONYMIZED (dado real, público e anonimizado na origem)."
+    },
+    {
+      "name": "research_only",
+      "original_attribute": null,
+      "type": "bool",
+      "unit": null,
+      "description": "Uso exclusivo em pesquisa (sempre true)."
+    }
+  ],
+  "privacy_validation": {
+    "compliant": true,
+    "blocked_fields": [],
+    "warnings": []
+  },
+  "quality": {
+    "passed": true,
+    "n_records": 303,
+    "problems": [],
+    "missing_values": {
+      "n_vasos_fluoroscopia": 4,
+      "cintilografia_talio": 2
+    },
+    "registros_completos": 297,
+    "prevalencia_doenca_cardiaca": 0.4587
+  },
+  "separation_from_synthetic": "Mantido em data/real_public/, com data_type próprio; nunca concatenado ao dataset sintético."
+}

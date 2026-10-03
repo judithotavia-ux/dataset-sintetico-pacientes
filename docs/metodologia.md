@@ -94,8 +94,13 @@ evidência clínica: medem a capacidade de recuperar a estrutura do gerador.
 4. **Curva de aprendizado:** compare 1.000, 10.000 e 100.000 registros.
 5. **Validação dos dados:** antes de treinar, rode `scripts/quality_report.py` e registre o resultado
    (qualidade APROVADA e privacidade CONFORME).
-6. **Validação externa (fora deste projeto):** qualquer conclusão sobre aplicabilidade clínica exige
-   validação em dados reais, com aprovação ética e base legal adequada.
+6. **Comparação com dados reais públicos:** o projeto inclui, separada, a base **UCI Heart Disease —
+   Cleveland** (303 pacientes reais, anonimizados na origem, CC BY 4.0). `scripts/compare_synthetic_real.py`
+   compara as distribuições em comum (SMD, Kolmogorov-Smirnov, Wasserstein, teste z de proporções) e treina
+   modelos na base real com validação cruzada estratificada repetida (5×10). Na seed 42, a regressão logística
+   obtém ROC-AUC 0,91 ± 0,03 para doença cardíaca, o que serve de referência de desempenho em dados reais.
+7. **Validação externa (fora deste projeto):** qualquer conclusão sobre aplicabilidade clínica exige
+   validação em dados reais da população-alvo, com aprovação ética e base legal adequada.
 
 ## 6. Métricas
 

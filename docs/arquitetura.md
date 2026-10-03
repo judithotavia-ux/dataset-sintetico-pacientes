@@ -19,6 +19,7 @@ dataset-sintetico-pacientes/
 │   │   ├── repository.py       # persistência normalizada e reconstrução da tabela plana
 │   │   ├── service.py          # orquestração e estatísticas do painel
 │   │   ├── audit.py            # logs técnicos (sem dados pessoais)
+│   │   ├── public_datasets.py  # base pública real UCI Heart Disease (separada do sintético)
 │   │   ├── models.py           # 6 tabelas SQLAlchemy
 │   │   ├── database.py, config.py, schemas.py
 │   │   └── main.py             # API FastAPI
@@ -224,7 +225,7 @@ Os alertas e a auditoria registram somente nomes de campos, categorias e contage
 
 ## 7. Estratégia de testes
 
-177 testes automatizados (`pytest`), organizados por responsabilidade:
+186 testes automatizados (`pytest`), organizados por responsabilidade:
 
 | Arquivo | Cobre |
 |---|---|
@@ -234,6 +235,7 @@ Os alertas e a auditoria registram somente nomes de campos, categorias e contage
 | `test_privacy.py` | 21 variações de campos proibidos (acentos, caixa, camelCase), ausência de falso positivo nas 50 colunas do dataset, conteúdo sensível em coluna permitida, marcação SYNTHETIC, payload aninhado, logs sem valores |
 | `test_export.py` | os 4 formatos gravam e relêem os mesmos dados; metadados embutidos; exportação bloqueada sem gravar arquivo; splits |
 | `test_integrity.py` | ida e volta banco ↔ DataFrame idêntica, contagens por tabela, substituição atômica do dataset, auditoria sem dados de registros, metadados e artefatos |
+| `test_public_dataset.py` | base pública real: conversão das colunas, ausentes preservados, alvo derivado, SHA-256, privacidade com a marcação REAL_PUBLIC_ANONYMIZED, recusa como sintética, distribuição de classes igual à documentada pela UCI |
 | `test_api.py` | fluxo completo do painel, exportação por formato e partição, validação de entrada, bloqueio de dados pessoais via API, reprodutibilidade pela API |
 
 Executar: `python -m pytest` na raiz do projeto (ou `scripts\run_tests.ps1`).

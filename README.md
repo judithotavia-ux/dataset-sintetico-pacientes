@@ -7,11 +7,15 @@
 Aplicação local para gerar, validar e exportar um **dataset sintético de pacientes** voltado a testes,
 treinamento e validação de sistemas de Inteligência Artificial em uma pesquisa de mestrado.
 
+📄 **Relatório técnico completo (PDF)**, com arquitetura, todas as equações e coeficientes do gerador, validações,
+métricas e resultados: [`docs/relatorio_tecnico.pdf`](docs/relatorio_tecnico.pdf)
+
 - **Backend:** Python 3.12, FastAPI, SQLAlchemy, SQLite, Pydantic, Faker, Pandas
 - **Frontend:** React, Vite, TypeScript, Tailwind CSS (painel com gráficos)
 - **Privacidade:** camada `privacy_guard`, que bloqueia campos de identificação e impede exportação não conforme
 - **ML pronto:** partição 70/15/15 estratificada, seed configurável, experimento baseline com scikit-learn
-- **Testes:** 177 testes automatizados (pytest)
+- **Base real para comparação:** UCI Heart Disease (pública, anonimizada, CC BY 4.0), mantida separada
+- **Testes:** 186 testes automatizados (pytest)
 
 ---
 
@@ -203,6 +207,33 @@ R² 0,51 para pressão sistólica.
 A metodologia completa para a dissertação (problema, preparação, treinamento, validação, métricas, riscos e
 reprodutibilidade) está em [`docs/metodologia.md`](docs/metodologia.md).
 
+## 5.1 Base pública real para comparação (separada)
+
+Além do dataset sintético, o projeto inclui uma **base pública real e anonimizada na origem**, mantida
+**separada**: **UCI Heart Disease — Cleveland** (303 pacientes, licença CC BY 4.0).
+
+- Arquivos em `data/real_public/uci_heart_disease/`: `heart_disease_cleveland.csv`, `metadata.json`,
+  `dataset_card.md`, `privacy_report.json` e `CITACAO.txt`.
+- Marcação própria: `data_type = "REAL_PUBLIC_ANONYMIZED"`. Os registros nunca são concatenados ao sintético, e o
+  `privacy_guard` recusa a base real se ela for validada como se fosse sintética.
+- Ao ser baixada, a integridade do arquivo oficial é conferida por SHA-256. Os nomes e documentos dos pacientes foram
+  removidos pelos mantenedores do repositório, e o arquivo usado tem só 14 atributos clínicos.
+
+```bash
+python scripts/fetch_public_dataset.py      # baixa da UCI, confere SHA-256 e converte para português
+python scripts/compare_synthetic_real.py    # compara as distribuições e treina modelos na base real
+```
+
+O resultado fica em `data/real_public/comparacao_sintetico_real.md`, com gráficos em `docs/figuras/`.
+
+**Citação obrigatória:** Janosi, A., Steinbrunn, W., Pfisterer, M., & Detrano, R. (1989). *Heart Disease* [Dataset].
+UCI Machine Learning Repository. https://doi.org/10.24432/C52P4X
+
+Por que não o DATASUS: os microdados do DATASUS (SIH/SUS etc.) também são públicos e anonimizados. Mas eles são
+distribuídos em formato `.dbc`, que exige bibliotecas nativas adicionais, e têm volume muito maior. A base UCI foi
+escolhida por ter licença explícita, tamanho adequado, variáveis clínicas em comum com o sintético e ampla citação
+na literatura de ML. O DATASUS fica como extensão possível da pesquisa.
+
 ## 6. Limitações
 
 - Não representa nenhuma população real; prevalências e efeitos são construções do gerador.
@@ -250,10 +281,12 @@ Em resumo: dados anonimizados e pseudonimizados **vêm de pessoas reais**; dados
 ```
 backend/    API FastAPI, gerador, privacy_guard, qualidade, exportação, banco (6 tabelas)
 frontend/   painel React + Vite + TypeScript + Tailwind
-data/       dataset de exemplo (1.000 pacientes, seed 42), splits, metadata.json, dataset_card.md, relatórios
-tests/      177 testes automatizados
+data/       dataset sintético de exemplo (1.000 pacientes, seed 42), splits, metadata, relatórios
+            real_public/ — base pública real UCI Heart Disease (separada) e comparação
+tests/      186 testes automatizados
 docs/       arquitetura.md, metodologia.md
-scripts/    generate_dataset.py, quality_report.py, baseline_experiment.py, setup/run (.ps1 e .sh)
+scripts/    generate_dataset.py, quality_report.py, baseline_experiment.py,
+            fetch_public_dataset.py, compare_synthetic_real.py, setup/run (.ps1 e .sh)
 ```
 
 Arquitetura, modelo de banco e fluxo: [`docs/arquitetura.md`](docs/arquitetura.md).

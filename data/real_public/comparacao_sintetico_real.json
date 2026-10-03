@@ -1,0 +1,165 @@
+{
+  "arquivos": {
+    "sintetico": "data\\synthetic_dataset.csv",
+    "real": "data\\real_public\\uci_heart_disease\\heart_disease_cleveland.csv"
+  },
+  "n": {
+    "sintetico": 1000,
+    "real": 303
+  },
+  "numericas": [
+    {
+      "variavel": "Idade",
+      "unidade": "anos",
+      "sintetico": {
+        "n": 1000,
+        "media": 48.7,
+        "dp": 14.8,
+        "mediana": 49.0,
+        "min": 18.0,
+        "max": 89.0
+      },
+      "real": {
+        "n": 303,
+        "media": 54.44,
+        "dp": 9.04,
+        "mediana": 56.0,
+        "min": 29.0,
+        "max": 77.0
+      },
+      "smd": -0.468,
+      "ks_d": 0.2339,
+      "ks_p": 1.17e-11,
+      "wasserstein": 7.244
+    },
+    {
+      "variavel": "PA sistólica",
+      "unidade": "mmHg",
+      "sintetico": {
+        "n": 1000,
+        "media": 118.22,
+        "dp": 14.22,
+        "mediana": 117.0,
+        "min": 85.0,
+        "max": 163.0
+      },
+      "real": {
+        "n": 303,
+        "media": 131.69,
+        "dp": 17.6,
+        "mediana": 130.0,
+        "min": 94.0,
+        "max": 200.0
+      },
+      "smd": -0.842,
+      "ks_d": 0.379,
+      "ks_p": 2.33e-30,
+      "wasserstein": 13.465
+    },
+    {
+      "variavel": "Colesterol total",
+      "unidade": "mg/dL",
+      "sintetico": {
+        "n": 1000,
+        "media": 193.33,
+        "dp": 30.67,
+        "mediana": 193.2,
+        "min": 110.0,
+        "max": 304.7
+      },
+      "real": {
+        "n": 303,
+        "media": 246.69,
+        "dp": 51.78,
+        "mediana": 241.0,
+        "min": 126.0,
+        "max": 564.0
+      },
+      "smd": -1.254,
+      "ks_d": 0.508,
+      "ks_p": 1.91e-55,
+      "wasserstein": 53.36
+    }
+  ],
+  "categoricas": [
+    {
+      "variavel": "Sexo masculino",
+      "sintetico_pct": 47.5,
+      "real_pct": 68.0,
+      "z": -6.25,
+      "p": 3.99e-10
+    },
+    {
+      "variavel": "Glicemia de jejum > 120 mg/dL",
+      "sintetico_pct": 5.2,
+      "real_pct": 14.9,
+      "z": -5.61,
+      "p": 2.06e-08
+    }
+  ],
+  "modelos_base_real": {
+    "alvo": "doenca_cardiaca",
+    "prevalencia": 0.4587,
+    "validacao": "5-fold estratificado repetido 10x (50 ajustes por modelo)",
+    "modelos": {
+      "Dummy (classe majoritária)": {
+        "roc_auc": {
+          "media": 0.5,
+          "dp": 0.0
+        },
+        "accuracy": {
+          "media": 0.5413,
+          "dp": 0.0053
+        },
+        "f1": {
+          "media": 0.0,
+          "dp": 0.0
+        },
+        "balanced_accuracy": {
+          "media": 0.5,
+          "dp": 0.0
+        }
+      },
+      "Regressão logística": {
+        "roc_auc": {
+          "media": 0.9104,
+          "dp": 0.0317
+        },
+        "accuracy": {
+          "media": 0.8376,
+          "dp": 0.0398
+        },
+        "f1": {
+          "media": 0.8157,
+          "dp": 0.045
+        },
+        "balanced_accuracy": {
+          "media": 0.8336,
+          "dp": 0.0398
+        }
+      },
+      "Random Forest": {
+        "roc_auc": {
+          "media": 0.9097,
+          "dp": 0.0335
+        },
+        "accuracy": {
+          "media": 0.8281,
+          "dp": 0.0501
+        },
+        "f1": {
+          "media": 0.8072,
+          "dp": 0.0557
+        },
+        "balanced_accuracy": {
+          "media": 0.825,
+          "dp": 0.0502
+        }
+      }
+    }
+  },
+  "figuras": [
+    "docs\\figuras\\comparacao_numericas.png",
+    "docs\\figuras\\comparacao_categoricas.png"
+  ]
+}

@@ -145,12 +145,15 @@ def _to_dataframe(dataset: Any) -> pd.DataFrame:
     raise TypeError("dataset deve ser DataFrame, dict de colunas ou lista de registros")
 
 
-def validate_privacy(dataset: Any) -> dict[str, Any]:
+def validate_privacy(dataset: Any, expected_data_type: str = DATA_TYPE, known_fields: Iterable[str] | None = None) -> dict[str, Any]:
     """Valida um dataset e retorna {"compliant": bool, "blocked_fields": [...], "warnings": [...]}.
 
     - blocked_fields: colunas proibidas pelo nome ou com conteúdo de dado pessoal.
-    - warnings: problemas de governança (marcação SYNTHETIC ausente, colunas fora do
-      dicionário, dataset vazio). Marcação SYNTHETIC ausente também torna o dataset não conforme.
+    - warnings: problemas de governança (marcação de origem ausente, colunas fora do
+      dicionário, dataset vazio). Marcação ausente também torna o dataset não conforme.
+
+    `expected_data_type` é "SYNTHETIC" para o gerador; a base pública real usa
+    "REAL_PUBLIC_ANONYMIZED" e o próprio dicionário em `known_fields`.
     """
     df = _to_dataframe(dataset)
     blocked: list[str] = []
@@ -168,10 +171,10 @@ def validate_privacy(dataset: Any) -> dict[str, Any]:
         warnings.append("Dataset vazio.")
     if "data_type" not in df.columns:
         marcacao_ok = False
-        warnings.append("Coluna obrigatória 'data_type' ausente: o dataset precisa ser marcado como SYNTHETIC.")
-    elif not df.empty and not (df["data_type"].astype(str) == DATA_TYPE).all():
+        warnings.append(f"Coluna obrigatória 'data_type' ausente: o dataset precisa ser marcado como {expected_data_type}.")
+    elif not df.empty and not (df["data_type"].astype(str) == expected_data_type).all():
         marcacao_ok = False
-        warnings.append("Há registros com data_type diferente de 'SYNTHETIC'.")
+        warnings.append(f"Há registros com data_type diferente de '{expected_data_type}'.")
     if "research_only" not in df.columns:
         marcacao_ok = False
         warnings.append("Coluna obrigatória 'research_only' ausente.")
@@ -179,7 +182,8 @@ def validate_privacy(dataset: Any) -> dict[str, Any]:
         marcacao_ok = False
         warnings.append("Há registros com research_only diferente de true.")
 
-    desconhecidas = [c for c in df.columns if c not in FIELDS_BY_NAME and c not in colunas_bloqueadas]
+    dicionario = set(known_fields) if known_fields is not None else set(FIELDS_BY_NAME)
+    desconhecidas = [c for c in df.columns if c not in dicionario and c not in colunas_bloqueadas]
     if desconhecidas:
         warnings.append(f"Colunas fora do dicionário de dados (revisar antes de usar): {', '.join(map(str, desconhecidas))}")
 
